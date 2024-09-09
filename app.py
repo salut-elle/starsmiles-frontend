@@ -1,14 +1,15 @@
 import streamlit as st
 import requests
-from PIL import Image
 
-# Custom CSS for a premium look and feel
+# Custom CSS for a refined look with a very thin yellow bar
 st.markdown("""
     <style>
-    /* Main background - Thinner yellow section */
+    /* Main background - Very thin yellow section */
     body {
-        background: linear-gradient(135deg, #fefbcd 10%, #b2d8d8 90%);  /* Thinner yellow and more blue */
+        background: linear-gradient(135deg, #fef5d1 0.0001%, #b2d8d8 99.9999%); /* Adjusted to make yellow bar very thin */
         color: #333333;
+        margin: 0;
+        padding: 0;
     }
 
     /* Header with blue color gradient and clear style */
@@ -26,9 +27,9 @@ st.markdown("""
         color: #3a77c1;  /* Dark blue for the header */
         text-align: center;
         letter-spacing: 3px;
-        padding: 20px 0;
+        padding: 15px 0;
         animation: fade-in 1.2s ease-in-out;
-        font-size: 3.2em;
+        font-size: 3em;
         text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for clarity */
     }
 
@@ -37,9 +38,9 @@ st.markdown("""
         color: #1f4e79;  /* Slightly lighter blue for subheader */
         text-align: center;
         letter-spacing: 1.5px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         animation: fade-in 1.5s ease-in-out;
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
 
     /* Custom star and tooth icons */
@@ -48,8 +49,8 @@ st.markdown("""
         color: #3a77c1;
         text-align: center;
         letter-spacing: 3px;
-        padding: 20px 0;
-        font-size: 3.2em;
+        padding: 15px 0;
+        font-size: 3em;
         text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
         display: flex;
         justify-content: center;
@@ -71,7 +72,7 @@ st.markdown("""
         font-family: 'Roboto', sans-serif;
         color: #ffffff;
         background-color: #1f4e79;
-        padding: 12px;
+        padding: 10px;
         border-radius: 10px;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -124,10 +125,10 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Header with star and tooth icons
+# Header with star and tooth icons (Updated with non-sparkling star)
 st.markdown("""
     <div class="custom-header">
-        <span class="star-icon">⭐</span>
+        <span class="star-icon">⭐</span>  <!-- Non-sparkling star -->
         Star Smiles
         <span class="tooth-icon">🦷</span>
     </div>
