@@ -6,7 +6,7 @@ st.markdown("""
     <style>
     /* Main background - Very thin yellow section */
     body {
-        background: linear-gradient(135deg, #fef5d1 0.0001%, #b2d8d8 99.9999%); /* Adjusted to make yellow bar very thin */
+        background: linear-gradient(135deg, #fef5d1 0.0001%, #b2d8d8 99.9999%);
         color: #333333;
         margin: 0;
         padding: 0;
@@ -24,23 +24,24 @@ st.markdown("""
 
     h1 {
         font-family: 'Playfair Display', serif;
-        color: #3a77c1;  /* Dark blue for the header */
+        color: #3a77c1;
         text-align: center;
         letter-spacing: 3px;
         padding: 15px 0;
         animation: fade-in 1.2s ease-in-out;
         font-size: 3em;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle shadow for clarity */
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
 
     h2 {
         font-family: 'Roboto', sans-serif;
-        color: #1f4e79;  /* Slightly lighter blue for subheader */
+        color: #1f4e79;
         text-align: center;
         letter-spacing: 1.5px;
         margin-bottom: 15px;
         animation: fade-in 1.5s ease-in-out;
         font-size: 1.6em;
+        text-decoration: underline;
     }
 
     /* Custom star and tooth icons */
@@ -57,12 +58,12 @@ st.markdown("""
         align-items: center;
     }
     .custom-header .star-icon {
-        color: #ffcc00;  /* Bright yellow for the star icon */
+        color: #ffcc00;
         margin-right: 10px;
         font-size: 1.5em;
     }
     .custom-header .tooth-icon {
-        color: #1f4e79;  /* Dark blue for tooth icon */
+        color: #1f4e79;
         margin-left: 10px;
         font-size: 1.5em;
     }
@@ -119,16 +120,36 @@ st.markdown("""
         transition: transform 0.3s ease;
     }
     .result-box:hover {
-        transform: scale(1.02); /* Slight enlargement on hover */
+        transform: scale(1.02);
     }
 
+    /* Result header styling */
+    .result-header {
+        font-size: 1.2em;
+        font-family: 'Roboto', sans-serif;
+        color: #1f4e79;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Styling for highlighting the highest prediction */
+    .highlight {
+        color: #ffcc00;  /* Bright yellow */
+        font-weight: bold;
+        font-size: 1.8em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow */
+    }
+    .confidence {
+        color: #3a77c1; /* Blue color for confidence percentage */
+        font-weight: bold;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # Header with star and tooth icons (Updated with non-sparkling star)
 st.markdown("""
     <div class="custom-header">
-        <span class="star-icon">⭐</span>  <!-- Non-sparkling star -->
+        <span class="star-icon">⭐</span>
         Star Smiles
         <span class="tooth-icon">🦷</span>
     </div>
@@ -148,18 +169,25 @@ if submit and image is not None:
     response = requests.post(url, files={'img': img_bytes})
     prediction = response.json()
 
-    st.markdown("<h3>Results:</h3>", unsafe_allow_html=True)
+    # Find the highest prediction
+    highest_pred = max(prediction, key=prediction.get)
+    highest_prob = round(100 * prediction[highest_pred], 2)
+
+    # Display header and highest prediction with highlighting
+    st.markdown(f"""
+        <h3 class='result-header'>
+            Results: The predicted condition is
+            <span class="highlight">{highest_pred}</span>
+            with a confidence of
+            <span class="confidence">{highest_prob}%</span>
+        </h3>
+    """, unsafe_allow_html=True)
 
     # Display prediction results
     result_html = ""
-    threshold = 0.5
-    pred = None
     for tooth_disease, probability in prediction.items():
         probability_percent = round(100 * probability, 2)
         result_html += f"<p><b>{tooth_disease}</b>: {probability_percent}%</p>"
-        if probability > threshold:
-            threshold = probability
-            pred = tooth_disease
 
     st.markdown(f"<div class='result-box'>{result_html}</div>", unsafe_allow_html=True)
 
