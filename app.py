@@ -165,7 +165,7 @@ with st.form(key='image_for_api'):
 # Process and display results
 if submit and image is not None:
     img_bytes = image.getvalue()
-    url = f'http://127.0.0.1:8000/predict'
+    url = f'https://starsmiles-308707400221.europe-west1.run.app/predict'
     response = requests.post(url, files={'img': img_bytes})
     prediction = response.json()
 
